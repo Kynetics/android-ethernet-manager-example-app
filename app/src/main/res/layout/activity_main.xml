@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Spinner
+        android:id="@+id/interfaceSpinner"
+        android:layout_width="175dp"
+        android:layout_height="31dp"
+        app:layout_constraintBottom_toBottomOf="@+id/modeSpinner"
+        app:layout_constraintEnd_toStartOf="@+id/modeSpinner"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/modeSpinner" />
+
+    <Spinner
+        android:id="@+id/modeSpinner"
+        android:layout_width="172dp"
+        android:layout_height="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/interfaceSpinner"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/ipaddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modeSpinner">
+
+        <RadioButton
+            android:id="@+id/dhcpRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DHCP" />
+
+        <RadioButton
+            android:id="@+id/staticRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Static" />
+    </RadioGroup>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ipaddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="IP Address"
+        app:placeholderText="192.168.1.12/24"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/gateway"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup4"
+        tools:layout_editor_absoluteX="-61dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ipaddressText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/gateway"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Gateway"
+        android:inputType="text"
+        app:placeholderText="192.168.1.1"
+        app:layout_constraintBottom_toTopOf="@+id/dns"
+        app:layout_constraintTop_toBottomOf="@+id/ipaddress"
+        tools:layout_editor_absoluteX="-16dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/gatewayText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="DNS"
+        app:placeholderText="8.8.8.8,8.8.4.4"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/actionButton"
+        app:layout_constraintTop_toBottomOf="@+id/gateway"
+        tools:layout_editor_absoluteX="-16dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dnsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/actionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="set"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dns" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
