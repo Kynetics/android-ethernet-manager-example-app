@@ -3,6 +3,7 @@ package com.kynetics.androidethernetexampleapp;
 import android.app.Application;
 import android.util.Log;
 
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
@@ -17,7 +18,8 @@ import java.util.List;
 
 public class EthViewModel extends AndroidViewModel {
 
-    private final SystemEthernetManager ethernetManager;
+    private SystemEthernetManager ethernetManager;
+    private static final String TAG = "KyneticsAndroidEthernetExampleApp_AndroidViewModel";
 
     List<String> availableInterfaces;
 
@@ -25,9 +27,13 @@ public class EthViewModel extends AndroidViewModel {
 
     public EthViewModel(@NonNull Application application) {
         super(application);
-        ethernetManager = SystemEthernetManager.newInstance(application);
-        availableInterfaces = Arrays.asList(ethernetManager.getAvailableInterfaces());
-
+        try {
+            ethernetManager = SystemEthernetManager.newInstance(application);
+            availableInterfaces = Arrays.asList(ethernetManager.getAvailableInterfaces());
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            Toast.makeText(application, "Failed to access EthernetManager! Check LogCat.", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void updateConfiguration(String interfaceName, IpConfiguration ipConfiguration){
