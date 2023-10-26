@@ -5,7 +5,6 @@ import android.util.Log;
 
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -31,8 +30,10 @@ public class EthViewModel extends AndroidViewModel {
             ethernetManager = SystemEthernetManager.newInstance(application);
             availableInterfaces = Arrays.asList(ethernetManager.getAvailableInterfaces());
         } catch (Exception e) {
+            String error = application.getString(R.string.error_hidden_api_access);
+            Log.d(TAG, error);
+            Toast.makeText(application, error, Toast.LENGTH_LONG).show();
             Log.e(TAG, e.getMessage());
-            Toast.makeText(application, "Failed to access EthernetManager! Check LogCat.", Toast.LENGTH_LONG).show();
         }
     }
 

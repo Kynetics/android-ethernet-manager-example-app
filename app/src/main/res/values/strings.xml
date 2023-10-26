@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Ethernet Manager</string>
+    <string name="error_hidden_api_access">The application cannot access the EthernetManager hidden class. This may be caused by restrictions in accessing non-SDK interfaces. Please verify if the application is signed with the platform key or run this command to allow hidden API access from adb: \n $ adb shell settings put global hidden_api_policy 1</string>
 </resources>
