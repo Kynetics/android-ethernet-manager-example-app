@@ -1,3 +1,7 @@
+/*
+ * Copyright (C)  2023 Kynetics, LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
 plugins {
     id 'com.android.application'
 }

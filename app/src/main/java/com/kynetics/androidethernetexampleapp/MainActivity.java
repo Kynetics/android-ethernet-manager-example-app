@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2023 Kynetics, LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 package com.kynetics.androidethernetexampleapp;
 
 import android.content.Intent;
