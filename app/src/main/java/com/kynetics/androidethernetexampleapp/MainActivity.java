@@ -1,6 +1,10 @@
 package com.kynetics.androidethernetexampleapp;
 
+import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -9,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -21,7 +24,6 @@ import com.kynetics.ethernetmanager.model.StaticIpConfiguration;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initUI(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         model = new ViewModelProvider(this).get(EthViewModel.class);
 
         gateway = findViewById(R.id.gatewayText);
@@ -166,6 +171,22 @@ public class MainActivity extends AppCompatActivity {
                     staticIpConfiguration.getDnsServers().stream().map(InetAddress::getHostAddress).collect(Collectors.joining(", "))
             );
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_about) {
+            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private static final String TAG = MainActivity.class.getSimpleName();
