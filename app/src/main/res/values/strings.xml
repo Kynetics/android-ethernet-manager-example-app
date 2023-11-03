@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Ethernet Manager</string>
+    <string name="app_name">Ethernet Handler</string>
     <string name="error_hidden_api_access">The application cannot access the EthernetManager hidden class. This may be caused by restrictions in accessing non-SDK interfaces. Please verify if the application is signed with the platform key or run this command to allow hidden API access from adb: \n $ adb shell settings put global hidden_api_policy 1</string>
 
     <string name="menu_about">About</string>
-    <string name="about_text">Ethernet Manager Android SDK extension example application \n\n
+    <string name="about_text">Ethernet Handler Android SDK extension example application \n\n
         This application serves as a reference implementation of Kynetics\' Ethernet Adapter Android SDK Extension library. \n\n
 
         To learn more about SDK Extension licensing please visit:\n
