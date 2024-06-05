@@ -1,0 +1,1 @@
+Example Android app which shows how to use the Ethernet Manager Android library
