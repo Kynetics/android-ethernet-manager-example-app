@@ -107,7 +107,14 @@ public class MainActivity extends AppCompatActivity {
                         new IpConfiguration(IpConfiguration.IpAssignment.DHCP, null, IpConfiguration.ProxySettings.UNASSIGNED, null));
             } else if (staticRadio.isChecked()) {
                 final List<InetAddress> dnsList = new ArrayList();
-                dnsList.add(InetAddress.getByName(dns.getText().toString()));
+                final String dnsText = dns.getText().toString();
+                if(dnsText.contains(",")){
+                    for(String dnsItem : dnsText.split(",")){
+                        dnsList.add(InetAddress.getByName(dnsItem));
+                    }
+                } else {
+                    dnsList.add(InetAddress.getByName(dnsText));
+                }
                 model.updateConfiguration(
                         interfacesSpinner.getSelectedItem().toString(),
                         new IpConfiguration(
