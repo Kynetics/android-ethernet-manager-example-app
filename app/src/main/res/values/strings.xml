@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (C)  2023 Kynetics, LLC
+  ~ Copyright © 2023–2024  Kynetics, Inc.
   ~ SPDX-License-Identifier: Apache-2.0
   -->
 <resources>
@@ -17,5 +17,5 @@
         <a href="https://github.com/Kynetics/android-ethernet-manager-example-app">https://github.com/Kynetics/android-ethernet-manager-example-app</a>\n\n
 
     </string>
-    <string name="about_copyright">Copyright © 2023  Kynetics  LLC</string>
+    <string name="about_copyright">Copyright © 2023–2024  Kynetics, Inc.</string>
 </resources>
