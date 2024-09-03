@@ -23,8 +23,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.kynetics.ethernetmanager.model.IpConfiguration;
-import com.kynetics.ethernetmanager.model.StaticIpConfiguration;
+import com.google.android.material.textfield.TextInputLayout;
+import com.kynetics.android.sdk.ethernet.model.IpAssignment;
+import com.kynetics.android.sdk.ethernet.model.IpConfiguration;
+import com.kynetics.android.sdk.ethernet.model.ProxySettings;
+import com.kynetics.android.sdk.ethernet.model.StaticIpConfiguration;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -32,7 +35,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
-    private EthViewModel model;
+    private EthViewModel ethViewModel;
 
     private TextInputEditText gateway;
     private TextInputEditText dns;
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        model = new ViewModelProvider(this).get(EthViewModel.class);
+        ethViewModel = new ViewModelProvider(this).get(EthViewModel.class);
 
         gateway = findViewById(R.id.gatewayText);
         dns = findViewById(R.id.dnsText);
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         modeItems.add("GET");
         modeItems.add("SET");
         final ArrayAdapter<String> modesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, modeItems);
-        final ArrayAdapter<String> interfacesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, model.availableInterfaces);
+        final ArrayAdapter<String> interfacesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, ethViewModel.availableInterfaces);
 
         modes.setAdapter(modesAdapter);
         interfacesSpinner.setAdapter(interfacesAdapter);
@@ -96,15 +99,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        model.getEthConfiguration().observe(this, this::showConfiguration);
+        ethViewModel.getEthConfiguration().observe(this, this::showConfiguration);
     }
 
     final View.OnClickListener setAction = v -> {
         try {
             if (dhcRadio.isChecked()) {
-                model.updateConfiguration(
+                ethViewModel.updateConfiguration(
                         interfacesSpinner.getSelectedItem().toString(),
-                        new IpConfiguration(IpConfiguration.IpAssignment.DHCP, null, IpConfiguration.ProxySettings.UNASSIGNED, null));
+                        new IpConfiguration(IpAssignment.DHCP, null, ProxySettings.UNASSIGNED, null));
             } else if (staticRadio.isChecked()) {
                 final List<InetAddress> dnsList = new ArrayList();
                 final String dnsText = dns.getText().toString();
@@ -115,29 +118,29 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     dnsList.add(InetAddress.getByName(dnsText));
                 }
-                model.updateConfiguration(
+                ethViewModel.updateConfiguration(
                         interfacesSpinner.getSelectedItem().toString(),
                         new IpConfiguration(
-                                IpConfiguration.IpAssignment.STATIC,
+                                IpAssignment.STATIC,
                                 new StaticIpConfiguration(
                                         ipaddress.getText().toString(),
                                         InetAddress.getByName(gateway.getText().toString()),
                                             dnsList,
                                         null
                                         ),
-                                IpConfiguration.ProxySettings.UNASSIGNED,
+                                ProxySettings.UNASSIGNED,
                                 null
                         )
                 );
             }
-        }catch (Exception e){
+        } catch (Exception e){
             Toast.makeText(this, "Error on setting configuration: " +e.getMessage(), Toast.LENGTH_LONG).show();
             Log.w(TAG, "Error on setting configuration", e);
         }
     };
 
     final View.OnClickListener getAction = v -> {
-        model.readEthConfiguration(interfacesSpinner.getSelectedItem().toString());
+        ethViewModel.readEthConfiguration(interfacesSpinner.getSelectedItem().toString());
     };
 
     private void enableDisableTextForm(boolean enable){
@@ -172,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void showConfiguration(IpConfiguration ipConfiguration){
-        final boolean isDHCP = ipConfiguration.getIpAssignment() == IpConfiguration.IpAssignment.DHCP;
+        final boolean isDHCP = ipConfiguration.getIpAssignment() == IpAssignment.DHCP;
         dhcRadio.setChecked(isDHCP);
         staticRadio.setChecked(!isDHCP);
         final StaticIpConfiguration staticIpConfiguration = ipConfiguration.getStaticIpConfiguration();

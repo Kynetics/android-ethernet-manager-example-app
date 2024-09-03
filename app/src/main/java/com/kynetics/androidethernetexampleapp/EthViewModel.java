@@ -14,15 +14,16 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.kynetics.ethernetmanager.SystemEthernetManager;
-import com.kynetics.ethernetmanager.model.IpConfiguration;
+import com.kynetics.android.sdk.ethernet.EthernetManager;
+import com.kynetics.android.sdk.ethernet.EthernetManagerFactory;
+import com.kynetics.android.sdk.ethernet.model.IpConfiguration;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class EthViewModel extends AndroidViewModel {
 
-    private SystemEthernetManager ethernetManager;
+    private EthernetManager ethernetManager;
     private static final String TAG = "KyneticsAndroidEthernetExampleApp_AndroidViewModel";
 
     List<String> availableInterfaces;
@@ -32,7 +33,7 @@ public class EthViewModel extends AndroidViewModel {
     public EthViewModel(@NonNull Application application) {
         super(application);
         try {
-            ethernetManager = SystemEthernetManager.newInstance(application);
+            ethernetManager = EthernetManagerFactory.newInstance(application);
             availableInterfaces = Arrays.asList(ethernetManager.getAvailableInterfaces());
         } catch (Exception e) {
             String error = application.getString(R.string.error_hidden_api_access);
