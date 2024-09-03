@@ -63,4 +63,18 @@ public class EthViewModel extends AndroidViewModel {
     public LiveData<IpConfiguration> getEthConfiguration(){
         return currentConfiguration;
     }
+
+    public void validateIpAddress(String ip) throws IllegalArgumentException {
+        ethernetManager.validateIpAndMask(ip);
+    }
+
+    Boolean isIpValid(MainActivity activity, String ip) {
+        try {
+            ethernetManager.validateIp(ip);
+        } catch (IllegalArgumentException e) {
+            activity.showToast(e.getMessage());
+            return false;
+        }
+        return true;
+    }
 }

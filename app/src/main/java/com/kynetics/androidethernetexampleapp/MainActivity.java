@@ -30,6 +30,7 @@ import com.kynetics.android.sdk.ethernet.model.ProxySettings;
 import com.kynetics.android.sdk.ethernet.model.StaticIpConfiguration;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     private TextInputEditText gateway;
     private TextInputEditText dns;
     private TextInputEditText ipaddress;
+    private TextInputLayout gatewayLayout;
+    private TextInputLayout dnsLayout;
+    private TextInputLayout ipaddressLayout;
 
     private Button actionButton;
     private RadioButton dhcRadio;
@@ -64,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
         gateway = findViewById(R.id.gatewayText);
         dns = findViewById(R.id.dnsText);
         ipaddress = findViewById(R.id.ipaddressText);
+        gatewayLayout  = findViewById(R.id.gateway);
+        dnsLayout = findViewById(R.id.dns);
+        ipaddressLayout = findViewById(R.id.ipaddress);
         actionButton = findViewById(R.id.actionButton);
         dhcRadio = findViewById(R.id.dhcpRadioButton);
         staticRadio = findViewById(R.id.staticRadioButton);
@@ -103,41 +110,93 @@ public class MainActivity extends AppCompatActivity {
     }
 
     final View.OnClickListener setAction = v -> {
+        // Start a new thread to avoid blocking the UI
+        Thread thread = new Thread(this::setConfiguration);
+        thread.start();
+    };
+
+    private void setConfiguration() {
         try {
             if (dhcRadio.isChecked()) {
                 ethViewModel.updateConfiguration(
                         interfacesSpinner.getSelectedItem().toString(),
                         new IpConfiguration(IpAssignment.DHCP, null, ProxySettings.UNASSIGNED, null));
             } else if (staticRadio.isChecked()) {
-                final List<InetAddress> dnsList = new ArrayList();
-                final String dnsText = dns.getText().toString();
-                if(dnsText.contains(",")){
-                    for(String dnsItem : dnsText.split(",")){
-                        dnsList.add(InetAddress.getByName(dnsItem));
-                    }
-                } else {
-                    dnsList.add(InetAddress.getByName(dnsText));
+                boolean fieldsPresent = validateEditTextEmptiness(ipaddressLayout);
+                fieldsPresent &= validateEditTextEmptiness(gatewayLayout);
+                fieldsPresent &= validateEditTextEmptiness(dnsLayout);
+                if (!fieldsPresent) {
+                    return;
                 }
+
+                String ipWithNetmask = ipaddress.getText().toString();
+                try {
+                    ethViewModel.validateIpAddress(ipWithNetmask);
+                } catch (IllegalArgumentException e) {
+                    showToast(e.getMessage());
+                    return;
+                }
+
+                final String dnsText = dns.getText().toString();
+                final List<InetAddress> dnsList = validateDnsString(this, dnsText);
+                if (dnsList.isEmpty()) {
+                    return;
+                }
+
+                String gatewayInput = gateway.getText().toString();
+                if (!ethViewModel.isIpValid(this, gatewayInput)) {
+                    return;
+                }
+
                 ethViewModel.updateConfiguration(
                         interfacesSpinner.getSelectedItem().toString(),
                         new IpConfiguration(
                                 IpAssignment.STATIC,
                                 new StaticIpConfiguration(
-                                        ipaddress.getText().toString(),
-                                        InetAddress.getByName(gateway.getText().toString()),
-                                            dnsList,
-                                        null
-                                        ),
+                                        ipWithNetmask, InetAddress.getByName(gatewayInput),
+                                        dnsList, null),
                                 ProxySettings.UNASSIGNED,
                                 null
                         )
                 );
             }
+            showToast("Configuration set successfully");
         } catch (Exception e){
-            Toast.makeText(this, "Error on setting configuration: " +e.getMessage(), Toast.LENGTH_LONG).show();
+            showToast("Error on setting configuration: " +e.getMessage());
             Log.w(TAG, "Error on setting configuration", e);
         }
-    };
+    }
+
+    public List<InetAddress> validateDnsString(MainActivity activity, String dnsText) throws IllegalArgumentException, UnknownHostException {
+        final List<InetAddress> dnsList = new ArrayList();
+        if (dnsText.contains(",")) {
+            for (String dnsItem : dnsText.split(",")) {
+                if (ethViewModel.isIpValid(activity, dnsItem)) {
+                    dnsList.add(InetAddress.getByName(dnsItem));
+                }
+            }
+        } else {
+            if (ethViewModel.isIpValid(activity, dnsText)) {
+                dnsList.add(InetAddress.getByName(dnsText));
+            }
+        }
+        return dnsList;
+    }
+
+    void showToast(String message){
+        runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_LONG).show());
+    }
+
+    private Boolean validateEditTextEmptiness(TextInputLayout textInputLayout) {
+        TextInputEditText editText = (TextInputEditText) textInputLayout.getEditText();
+        if (editText.getText().toString().isEmpty()) {
+            runOnUiThread(() -> textInputLayout.setError("This field cannot be empty"));
+            return false;
+        } else {
+            runOnUiThread(() -> textInputLayout.setError(null));
+        }
+        return true;
+    }
 
     final View.OnClickListener getAction = v -> {
         ethViewModel.readEthConfiguration(interfacesSpinner.getSelectedItem().toString());
@@ -160,9 +219,6 @@ public class MainActivity extends AppCompatActivity {
         gateway.setEnabled(isSet);
         dns.setEnabled(isSet);
         ipaddress.setEnabled(isSet);
-//        gateway.setFocusable(isSet);
-//        dns.setFocusable(isSet);
-//        ipaddress.setFocusable(isSet);
         dhcRadio.setEnabled(isSet);
         staticRadio.setEnabled(isSet);
         if(isSet){
