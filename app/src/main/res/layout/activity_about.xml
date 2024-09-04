@@ -22,7 +22,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimaryDark"
+            android:background="?attr/colorSecondaryVariant"
             app:title="@string/menu_about" />
 
     </com.google.android.material.appbar.AppBarLayout>

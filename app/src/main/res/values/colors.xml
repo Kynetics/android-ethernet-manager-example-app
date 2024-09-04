@@ -11,4 +11,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="green_700">#388E3C</color>
+    <color name="green_900">#1B5E20</color>
+    <color name="cardView_background">#FFF</color>
+    <color name="error_color">#C00003</color>
 </resources>

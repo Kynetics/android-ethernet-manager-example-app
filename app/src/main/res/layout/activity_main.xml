@@ -1,136 +1,311 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright © 2023–2024  Kynetics, Inc.
   ~ SPDX-License-Identifier: Apache-2.0
   -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimaryDark"
+            android:background="?attr/colorSecondaryVariant"
             app:title="@string/app_name" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <Spinner
-        android:id="@+id/interfaceSpinner"
-        android:layout_width="175dp"
-        android:layout_height="31dp"
-        app:layout_constraintBottom_toBottomOf="@+id/modeSpinner"
-        app:layout_constraintEnd_toStartOf="@+id/modeSpinner"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/modeSpinner" />
 
-    <Spinner
-        android:id="@+id/modeSpinner"
-        android:layout_width="172dp"
-        android:layout_height="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/radioGroup4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/interfaceSpinner"
-        app:layout_constraintTop_toBottomOf="@id/app_bar"/>
-
-    <RadioGroup
-        android:id="@+id/radioGroup4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/ipaddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/modeSpinner">
-
-        <RadioButton
-            android:id="@+id/dhcpRadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DHCP" />
-
-        <RadioButton
-            android:id="@+id/staticRadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Static" />
-    </RadioGroup>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ipaddress"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="IP Address"
-        app:placeholderText="192.168.1.12/24"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/gateway"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup4"
-        tools:layout_editor_absoluteX="-61dp">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ipaddressText"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="actionNext"
-            android:singleLine="true"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/gateway"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Gateway"
-        android:inputType="text"
-        app:placeholderText="192.168.1.1"
-        app:layout_constraintBottom_toTopOf="@+id/dns"
-        app:layout_constraintTop_toBottomOf="@+id/ipaddress"
-        tools:layout_editor_absoluteX="-16dp">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/gatewayText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionNext"
-            android:singleLine="true"/>
-    </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dns"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="DNS"
-        app:placeholderText="8.8.8.8,8.8.4.4"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/actionButton"
-        app:layout_constraintTop_toBottomOf="@+id/gateway"
-        tools:layout_editor_absoluteX="-16dp">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/dnsText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:singleLine="true"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/select_eth_card"
+                style="@style/cardView_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
 
-    <Button
-        android:id="@+id/actionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="set"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dns" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/device_selection"
+                        android:textAllCaps="true"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <LinearLayout
+                        android:id="@+id/interfaceLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="5dp">
+
+                        <TextView
+                            android:id="@+id/textView_selectedInterface"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/selected_eth" />
+
+                        <Spinner
+                            android:id="@+id/interfaceSpinner"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/interface_error_msg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:padding="5dp"
+                        android:paddingBottom="5dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/design_default_color_error"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        tools:text="@string/error_no_interfaces"
+                        tools:visibility="visible" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="5dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/internet_connection_status" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/internetSwitch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/internet_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:padding="5dp"
+                        android:text="@string/internet_connection_status_active"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/green_700"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/read_config_card"
+                style="@style/cardView_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView_configTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/get_config_title"
+                        android:textAllCaps="true"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <Button
+                        android:id="@+id/readConfigButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/read_configuration" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/configResultTextView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:lineSpacingExtra="5dp"
+                            android:padding="5dp"
+                            android:text="@string/read_config_result"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:visibility="gone"
+                            tools:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/configTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:lineSpacingExtra="5dp"
+                            android:padding="5dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            tools:text="Static\n192.168.1.1/24\n192.168.1.1\n8.8.8.8,4.4.4.4"
+                            tools:visibility="visible" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/set_config_card"
+                style="@style/cardView_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="5dp"
+                        android:text="@string/set_config_title"
+                        android:textAllCaps="true"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGroup4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/dhcpRadioButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="@string/dhcp_assignment" />
+
+                        <RadioButton
+                            android:id="@+id/staticRadioButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/static_assignment" />
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:id="@+id/staticForm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ipaddressLayout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/ip_address_mask"
+                            android:inputType="text"
+                            app:placeholderText="192.168.1.12/24">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/ipaddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:singleLine="true" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/gatewayLayout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:hint="@string/gateway"
+                            android:inputType="text"
+                            app:placeholderText="192.168.1.1">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/gateway"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionNext"
+                                android:singleLine="true" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/dnsLayout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:hint="@string/dns"
+                            android:inputType="text"
+                            app:placeholderText="8.8.8.8,8.8.4.4">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/dns"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionDone"
+                                android:singleLine="true" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/updateConfigButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/update_configuration" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

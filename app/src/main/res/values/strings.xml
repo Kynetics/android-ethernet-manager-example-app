@@ -18,4 +18,21 @@
 
     </string>
     <string name="about_copyright">Copyright © 2023–2024  Kynetics, Inc.</string>
+    <string name="selected_eth">Selected Ethernet Interface:</string>
+    <string name="get_config_title">Read Ethernet Configuration</string>
+    <string name="read_configuration">Read Configuration</string>
+    <string name="read_config_result">Assignment:\nIP Address:\nGateway:\nDns:</string>
+    <string name="set_config_title">Update Ethernet Configuration</string>
+    <string name="update_configuration">Set Configuration</string>
+    <string name="dns">DNS</string>
+    <string name="gateway">Gateway</string>
+    <string name="ip_address_mask">IP Address With Mask</string>
+    <string name="device_selection">Available interfaces</string>
+    <string name="error_no_interfaces">No ethernet interfaces found on the device!</string>
+    <string name="error_no_configuration">No configuration found for the selected eth interface!</string>
+    <string name="static_assignment">Static</string>
+    <string name="dhcp_assignment">DHCP</string>
+    <string name="internet_connection_status">Internet Connection Check</string>
+    <string name="internet_connection_status_active">Internet Available</string>
+    <string name="internet_connection_status_inactive">Internet Not available</string>
 </resources>
