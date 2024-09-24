@@ -15,4 +15,6 @@
     <color name="green_900">#1B5E20</color>
     <color name="cardView_background">#FFF</color>
     <color name="error_color">#C00003</color>
+    <color name="status_disconnect">#EB1C0F</color>
+    <color name="status_active">#0FE019</color>
 </resources>

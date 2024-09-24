@@ -32,7 +32,9 @@
     <string name="error_no_configuration">No configuration found for the selected eth interface!</string>
     <string name="static_assignment">Static</string>
     <string name="dhcp_assignment">DHCP</string>
-    <string name="internet_connection_status">Internet Connection Check</string>
+    <string name="internet_connection_status">Internet Connection Status</string>
     <string name="internet_connection_status_active">Internet Available</string>
     <string name="internet_connection_status_inactive">Internet Not available</string>
+    <string name="ethernet_connection_status">Ethernet Connection Status</string>
+    <string name="read_conf_auto_update">Auto Update</string>
 </resources>

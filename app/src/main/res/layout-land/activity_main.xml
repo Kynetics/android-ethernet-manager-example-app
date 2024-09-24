@@ -101,6 +101,32 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingVertical="5dp">
+
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/internet_status_auto_switch"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_weight="1"
+                                android:text="@string/internet_connection_status"
+                                app:switchPadding="10dp" />
+
+                            <CheckBox
+                                android:id="@+id/internet_status"
+                                style="@style/connectivityStatusStyle"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginStart="10dp"
+                                android:visibility="gone"
+                                tools:visibility="visible" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:paddingVertical="5dp">
 
@@ -108,25 +134,17 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@string/internet_connection_status" />
+                                android:text="@string/ethernet_connection_status"
+                                android:textColor="?android:attr/textColorPrimary" />
 
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/internetSwitch"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                            <CheckBox
+                                android:id="@+id/ethernet_status"
+                                style="@style/connectivityStatusStyle"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/connection_status_check" />
+
                         </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/internet_status"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:padding="5dp"
-                            android:text="@string/internet_connection_status_active"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                            android:textColor="@color/green_700"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -152,6 +170,14 @@
                             android:text="@string/get_config_title"
                             android:textAllCaps="true"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/read_auto_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/read_conf_auto_update"
+                            app:switchPadding="10dp" />
 
                         <Button
                             android:id="@+id/readConfigButton"

@@ -30,4 +30,12 @@
         <item name="contentPadding">10dp</item>
         <item name="cardBackgroundColor">@color/cardView_background</item>
     </style>
+
+    <style name="connectivityStatusStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:checked">false</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+        <item name="android:background">@drawable/connection_status_check</item>
+        <item name="android:button">@null</item>
+    </style>
 </resources>
