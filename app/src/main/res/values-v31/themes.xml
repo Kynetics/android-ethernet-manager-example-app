@@ -1,0 +1,42 @@
+<!--
+  ~ Copyright © 2023–2024  Kynetics, Inc.
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/green_700</item>
+        <item name="colorSecondaryVariant">@color/green_900</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorSecondaryVariant</item>
+        <item name="android:colorBackground">#EBEEF4</item>
+        <!-- Customize your theme here. -->
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_logo</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="cardView_style" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">5dp</item>
+        <item name="cardElevation">5dp</item>
+        <item name="contentPadding">10dp</item>
+        <item name="cardBackgroundColor">@color/cardView_background</item>
+    </style>
+
+    <style name="connectivityStatusStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:checked">false</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+        <item name="android:background">@drawable/connection_status_check</item>
+        <item name="android:button">@null</item>
+    </style>
+</resources>
